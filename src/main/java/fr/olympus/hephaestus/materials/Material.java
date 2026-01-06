@@ -1,7 +1,6 @@
 package fr.olympus.hephaestus.materials;
 
 import java.util.List;
-
 public abstract class Material {
 
     protected final MaterialType type;

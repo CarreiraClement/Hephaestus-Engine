@@ -8,6 +8,7 @@ public abstract class Factory {
 
     protected List<Material> inputMaterials;
     protected List<Material> outputMaterials;
+    protected final String name;
 
 
     protected Material tratedMaterial;
@@ -15,7 +16,8 @@ public abstract class Factory {
 
     protected byte[][][] layout;
 
-    protected Factory(List<Material> inputMaterials, List<Material> outputMaterials) {
+    protected Factory(String name, List<Material> inputMaterials, List<Material> outputMaterials) {
+        this.name = name;
         this.inputMaterials = inputMaterials;
         this.outputMaterials = outputMaterials;
     }
@@ -52,7 +54,7 @@ public abstract class Factory {
     protected abstract void updateFactory(float dt);
 
 
-
-
-
+    public String getName() {
+        return name;
+    }
 }
