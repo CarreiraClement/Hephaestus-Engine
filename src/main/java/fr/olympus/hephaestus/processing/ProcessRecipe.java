@@ -19,11 +19,13 @@ public interface ProcessRecipe {
     int specificityScore();
     int inputCount();
 
+    int outputCount();
+
     TimeWindow timeWindowOrNull();
 
     boolean canStart(ProcessContext ctx, fr.olympus.hephaestus.resources.HephaestusData data);
-
     default void onTick(ProcessContext ctx, fr.olympus.hephaestus.resources.HephaestusData data, float elapsedSeconds, ProcessingPhase phase) {}
+
     default void onEvent(ProcessContext ctx, fr.olympus.hephaestus.resources.HephaestusData data, FactoryEvent event, float elapsedSeconds, ProcessingPhase phase) {}
 
     boolean tryComplete(ProcessContext ctx, fr.olympus.hephaestus.resources.HephaestusData data, float elapsedSeconds, ProcessingPhase phase);

@@ -36,6 +36,8 @@ public abstract class Factory {
         if (list != null) recipes.addAll(list);
     }
 
+    public List<ProcessRecipe> getRecipes() { return recipes; }
+
     public List<MaterialInstance> extractAllOutputs() {
         List<MaterialInstance> out = new ArrayList<>(outputs);
         outputs.clear();
@@ -114,6 +116,15 @@ public abstract class Factory {
         this.registryLevel = level;
     }
 
+    //set current recipe session
+    public final void setSession(ProcessRecipe recipe) {
+        this.session = new ProcessSession(recipe);
+    }
+
+    public final boolean getSession() {
+        return this.session != null;
+    }
+
     private static final class ProcessSession {
         final ProcessRecipe recipe;
         float elapsed;
@@ -131,4 +142,5 @@ public abstract class Factory {
             return ProcessingPhase.IN_WINDOW;
         }
     }
+
 }

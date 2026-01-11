@@ -87,4 +87,35 @@ public final class HephaestusData {
             return List.copyOf(recipeEntries);
         }
     }
+
+    // get all recipe link to a factory id
+    public List<ProcessRecipeRegistryEntry> getProcessRecipesByFactoryId(String factoryId,  Set<String> factoryGroupsOfInstance, int factoryLevel) {
+        List<ProcessRecipeRegistryEntry> results = new ArrayList<>();
+        synchronized (recipeEntries) {
+            for (ProcessRecipeRegistryEntry re : recipeEntries) {
+                if (re.selector().matchesFactory(factoryId, factoryGroupsOfInstance, factoryLevel)) {
+                    results.add(re);
+                }
+            }
+        }
+        return results;
+    }
+
+    // get Recipe by id
+    public ProcessRecipeRegistryEntry getProcessRecipeById(String recipeId) {
+        synchronized (recipeEntries) {
+            for (ProcessRecipeRegistryEntry re : recipeEntries) {
+                if (re.recipe().id().equals(recipeId)) {
+                    return re;
+                }
+            }
+        }
+        throw new IllegalArgumentException("Unknown recipe id: " + recipeId);
+    }
+
+    public List<String> getFactoryIdsSnapshot() {
+        ArrayList<String> ids = new ArrayList<>(factories.keySet());
+        Collections.sort(ids);
+        return ids;
+    }
 }
