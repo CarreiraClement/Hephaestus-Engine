@@ -4,29 +4,29 @@ import fr.olympus.hephaestus.materials.MaterialInstance;
 
 import java.util.List;
 
-public final class ProcessContext {
+/**
+ * :
+ * Execution context for a processing operation.
+ *
+ * @param contents the input materials to be processed
+ * @param outputs  the resulting materials after processing
+ */
+public record ProcessContext(List<MaterialInstance> contents, List<MaterialInstance> outputs) {
 
-    private final List<MaterialInstance> contents;
-    private final List<MaterialInstance> outputs;
-
-    public ProcessContext(List<MaterialInstance> contents, List<MaterialInstance> outputs) {
-        this.contents = contents;
-        this.outputs = outputs;
-    }
-
-    public List<MaterialInstance> contents() {
-        return contents;
-    }
-
-    public List<MaterialInstance> outputs() {
-        return outputs;
-    }
-
-    // helpers optionnels
+    /**
+     * Adds a processed material to the outputs list.
+     *
+     * @param out the material instance to add to outputs
+     */
     public void pushOutput(MaterialInstance out) {
         outputs.add(out);
     }
 
+    /**
+     * Removes a material from the contents list at the specified index.
+     *
+     * @param idx the index of the material to remove from contents
+     */
     public void removeContentAt(int idx) {
         contents.remove(idx);
     }

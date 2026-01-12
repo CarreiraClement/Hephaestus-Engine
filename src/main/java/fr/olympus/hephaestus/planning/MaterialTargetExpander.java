@@ -7,13 +7,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Utils for expanding material targets.
+ */
 public final class MaterialTargetExpander {
 
-    private MaterialTargetExpander() {}
+    // Private constructor to prevent instantiation
 
     /**
-     * Transforme un target "catégorie" en plusieurs targets "ID" (tous les matériaux compatibles).
-     * Si target est déjà ID/ANY, renvoie tel quel.
+     * Private constructor to prevent instantiation.
+     */
+    private MaterialTargetExpander() {
+    }
+
+    /**
+     * Transforms a "category" target into multiple "ID" targets (all compatible materials).
+     * If the target is already ID/ANY, returns it as is.
+     *
+     * @param target the target to expand
+     * @param data   the HephaestusData instance to query materials
+     * @param limit  the maximum number of concrete IDs to return
+     * @return a list of concrete ID matchers
      */
     public static List<MaterialMatcher> expandToConcreteIds(MaterialMatcher target,
                                                             HephaestusData data,
@@ -32,7 +46,10 @@ public final class MaterialTargetExpander {
                     Set<String> cats = data.getMaterialCategoryKeys(id);
                     boolean ok = false;
                     for (String w : wanted) {
-                        if (cats.contains(w)) { ok = true; break; }
+                        if (cats.contains(w)) {
+                            ok = true;
+                            break;
+                        }
                     }
                     if (ok) {
                         out.add(MaterialMatcher.id(id));

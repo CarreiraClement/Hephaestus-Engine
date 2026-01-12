@@ -17,13 +17,29 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Utility class for automatically registering materials, factories, and process recipes
+ * by scanning specified base packages for annotated classes.
+ */
 public final class AutoRegistrar {
 
-    private AutoRegistrar() {}
+    // Prevent instantiation
+    private AutoRegistrar() {
+    }
 
+
+    /**
+     * Registers components based on the specified type and base packages.
+     *
+     * @param type         The type of components to register. see {@link RegisterType}.
+     * @param basePackages The base packages to scan for components.
+     * @throws IllegalArgumentException if type is null or basePackages is null/empty.
+     * @throws IllegalStateException    if any annotated class is invalid or cannot be instantiated.
+     */
     public static void register(RegisterType type, String... basePackages) {
         if (type == null) throw new IllegalArgumentException("type cannot be null.");
-        if (basePackages == null || basePackages.length == 0) throw new IllegalArgumentException("basePackages required.");
+        if (basePackages == null || basePackages.length == 0)
+            throw new IllegalArgumentException("basePackages required.");
 
         HephaestusData data = Hephaestus.getData();
 
@@ -99,6 +115,14 @@ public final class AutoRegistrar {
         }
     }
 
+    /**
+     * Creates a new instance of the specified class using its no-argument constructor.
+     *
+     * @param clazz The class to instantiate.
+     * @param <T>   The type of the class.
+     * @return A new instance of the specified class.
+     * @throws IllegalStateException if the class cannot be instantiated.
+     */
     private static <T> T newInstance(Class<T> clazz) {
         try {
             Constructor<T> c = clazz.getDeclaredConstructor();
