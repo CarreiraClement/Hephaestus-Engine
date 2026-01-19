@@ -51,7 +51,7 @@ public interface ProcessRecipe {
      *
      * @return energy cost per second
      */
-    int cost();
+    List<Integer> cost();
 
     // ---- runtime selection ----
 

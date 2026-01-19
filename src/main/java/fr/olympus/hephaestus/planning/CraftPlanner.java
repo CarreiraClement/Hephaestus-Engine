@@ -283,7 +283,9 @@ public final class CraftPlanner {
                 List<PlanStep> steps = new ArrayList<>(base.steps);
                 steps.add(new PlanStep(r));
 
-                CraftPlan candidate = new CraftPlan(base.totalCost + r.cost(), steps);
+                int totalCost = base.totalCost + r.cost().stream().mapToInt(Integer::intValue).sum();
+
+                CraftPlan candidate = new CraftPlan(totalCost, steps);
                 allCandidates.add(candidate);
                 budget.consumeOne();
             }
