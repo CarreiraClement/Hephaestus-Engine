@@ -8,6 +8,9 @@ import java.util.List;
 
 import static fr.mrqsdf.resources.Data.COAL;
 
+/**
+ * Coal material class.
+ */
 @MaterialAnnotation(id = COAL)
 public final class CoalMaterial extends SimpleMaterial {
     public CoalMaterial() {

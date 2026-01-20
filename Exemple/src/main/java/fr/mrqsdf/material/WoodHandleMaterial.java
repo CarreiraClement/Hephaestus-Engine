@@ -8,6 +8,9 @@ import java.util.List;
 
 import static fr.mrqsdf.resources.Data.HANDLE_WOOD;
 
+/**
+ * Wood Handle material class.
+ */
 @MaterialAnnotation(id = HANDLE_WOOD)
 public final class WoodHandleMaterial extends SimpleMaterial {
     public WoodHandleMaterial() {

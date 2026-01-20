@@ -8,6 +8,9 @@ import java.util.List;
 
 import static fr.mrqsdf.resources.Data.WATER;
 
+/**
+ * Water material class.
+ */
 @MaterialAnnotation(id = WATER)
 public final class WaterMaterial extends SimpleMaterial {
     public WaterMaterial() {

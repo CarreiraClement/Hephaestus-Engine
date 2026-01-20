@@ -4,7 +4,6 @@ package fr.mrqsdf.jfx.module;
 import fr.mrqsdf.jfx.game.GameContext;
 import fr.olympus.hephaestus.factory.Factory;
 import fr.olympus.hephaestus.processing.ProcessRecipe;
-import fr.olympus.hephaestus.processing.TimeWindow;
 import fr.olympus.hephaestus.register.ProcessRecipeRegistryEntry;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -19,8 +18,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Factory module class that represents a factory in the UI.
+ */
 public class FactoryModule extends Pane {
 
+    /**
+     * Port and layout constants
+     */
     private static final double PORT_RADIUS = 10.0;
     private static final double SIDE_PADDING = 16.0;
     private static final double V_PADDING = 16.0;
@@ -58,6 +63,12 @@ public class FactoryModule extends Pane {
     private double dragAnchorX, dragAnchorY;
     private double dragStartX, dragStartY;
 
+    /**
+     * Constructor.
+     *
+     * @param game    Game context
+     * @param factory Factory
+     */
     public FactoryModule(GameContext game, Factory factory) {
         this.game = Objects.requireNonNull(game, "game");
         this.factory = Objects.requireNonNull(factory, "factory");
@@ -104,18 +115,38 @@ public class FactoryModule extends Pane {
         setupMouseInteractions();
     }
 
+    /**
+     * Get the factory.
+     *
+     * @return Factory
+     */
     public Factory getFactory() {
         return factory;
     }
 
+    /**
+     * Get the factory ID.
+     *
+     * @return Factory ID
+     */
     public String getFactoryId() {
         return factoryId;
     }
 
+    /**
+     * Get the current recipe ID.
+     *
+     * @return Recipe ID
+     */
     public String getRecipeId() {
         return recipeId;
     }
 
+    /**
+     * Set the current recipe ID.
+     *
+     * @param recipeId Recipe ID
+     */
     public void setRecipeId(String recipeId) {
         if (recipeId == null || recipeId.isBlank()) {
             this.recipeId = null;
@@ -148,6 +179,11 @@ public class FactoryModule extends Pane {
         requestLayout();
     }
 
+    /**
+     * Tick method to update production state.
+     *
+     * @param dt Delta time
+     */
     public void tick(float dt) {
         game.tickFactory(factory, dt);
 
@@ -167,6 +203,9 @@ public class FactoryModule extends Pane {
         timerLabel.setText("Time: " + (int) Math.ceil(remainingSeconds) + " s");
     }
 
+    /**
+     * Complete the current production.
+     */
     private void completeProduction() {
         game.grantOutputsFromRecipe(recipe);
 
@@ -178,6 +217,9 @@ public class FactoryModule extends Pane {
         timerLabel.setText("Time: " + (int) Math.ceil(min) + " s");
     }
 
+    /**
+     * Layout children.
+     */
     @Override
     protected void layoutChildren() {
         double w = background.getWidth();
@@ -195,20 +237,40 @@ public class FactoryModule extends Pane {
         double rbw = removeButton.getWidth();
         removeButton.relocate(w - rbw - 6, 6);
 
-        layoutPortsLeft(inputs, w, h);
+        layoutPortsLeft(inputs, h);
         layoutPortsRight(outputs, w, h);
     }
 
-    private void layoutPortsLeft(List<Circle> ports, double w, double h) {
+    /**
+     * Layout ports on the left side.
+     *
+     * @param ports List of ports
+     * @param h     Height
+     */
+    private void layoutPortsLeft(List<Circle> ports, double h) {
         double x = SIDE_PADDING + PORT_RADIUS;
         layoutPortsVertical(ports, x, h);
     }
 
+    /**
+     * Layout ports on the right side.
+     *
+     * @param ports List of ports
+     * @param w     Width
+     * @param h     Height
+     */
     private void layoutPortsRight(List<Circle> ports, double w, double h) {
         double x = w - (SIDE_PADDING + PORT_RADIUS);
         layoutPortsVertical(ports, x, h);
     }
 
+    /**
+     * Layout ports vertically at the given x position.
+     *
+     * @param ports List of ports
+     * @param x     X position
+     * @param h     Height
+     */
     private void layoutPortsVertical(List<Circle> ports, double x, double h) {
         int n = ports.size();
         if (n == 0) return;
@@ -234,6 +296,12 @@ public class FactoryModule extends Pane {
         }
     }
 
+    /**
+     * Rebuild input and output ports.
+     *
+     * @param inputCount  Number of input ports
+     * @param outputCount Number of output ports
+     */
     private void rebuildPorts(int inputCount, int outputCount) {
         for (Circle c : inputs) getChildren().remove(c);
         for (Circle c : outputs) getChildren().remove(c);
@@ -261,6 +329,9 @@ public class FactoryModule extends Pane {
         }
     }
 
+    /**
+     * Update preferred size based on content.
+     */
     private void updatePreferredSize() {
         labelBox.applyCss();
         labelBox.autosize();
@@ -292,6 +363,9 @@ public class FactoryModule extends Pane {
         setMaxSize(USE_PREF_SIZE, USE_PREF_SIZE);
     }
 
+    /**
+     * Setup mouse interactions for the factory module.
+     */
     private void setupMouseInteractions() {
         setOnMouseClicked(e -> {
             if (e.getButton() == MouseButton.SECONDARY) {
@@ -360,6 +434,12 @@ public class FactoryModule extends Pane {
         setOnMouseReleased(e -> dragging = false);
     }
 
+    /**
+     * Show the recipe selection menu.
+     *
+     * @param screenX Screen X position
+     * @param screenY Screen Y position
+     */
     private void showRecipeMenu(double screenX, double screenY) {
         ContextMenu menu = new ContextMenu();
 

@@ -8,6 +8,9 @@ import java.util.List;
 
 import static fr.mrqsdf.resources.Data.IRON_INGOT;
 
+/**
+ * Iron Ingot material class.
+ */
 @MaterialAnnotation(id = IRON_INGOT)
 public final class IronIngotMaterial extends SimpleMaterial {
     public IronIngotMaterial() {

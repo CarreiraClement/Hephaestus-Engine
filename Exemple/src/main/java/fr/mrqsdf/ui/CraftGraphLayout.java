@@ -4,6 +4,9 @@ import com.googlecode.lanterna.TerminalSize;
 
 import java.util.*;
 
+/**
+ * Layout engine for CraftGraph.
+ */
 public final class CraftGraphLayout {
 
     private static final int COL_GAP = 8;
@@ -13,6 +16,11 @@ public final class CraftGraphLayout {
     private int offsetX = 0;
     private int offsetY = 0;
 
+    /**
+     * Perform layout of the graph.
+     * @param graph Graph
+     * @param screenSize Screen size
+     */
     public void layout(CraftGraph graph, TerminalSize screenSize) {
         offsetX = 0;
         offsetY = 0;

@@ -8,6 +8,9 @@ import java.util.List;
 
 import static fr.mrqsdf.resources.Data.PLANK_OAK;
 
+/**
+ * Oak Plank material class.
+ */
 @MaterialAnnotation(id = PLANK_OAK)
 public final class OakPlankMaterial extends SimpleMaterial {
     public OakPlankMaterial() {

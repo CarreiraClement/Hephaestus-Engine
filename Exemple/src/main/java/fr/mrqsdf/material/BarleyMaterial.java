@@ -8,6 +8,9 @@ import java.util.List;
 
 import static fr.mrqsdf.resources.Data.BARLEY;
 
+/**
+ * Barley material class.
+ */
 @MaterialAnnotation(id = BARLEY)
 public final class BarleyMaterial extends SimpleMaterial {
     public BarleyMaterial() {

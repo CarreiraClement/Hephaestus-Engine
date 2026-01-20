@@ -9,6 +9,9 @@ import java.util.List;
 import static fr.mrqsdf.resources.Data.*;
 import static fr.mrqsdf.utils.GroupsUtils.selectorIds;
 
+/**
+ * Recipe to make Wort from Water and Barley in a Barrel.
+ */
 @RecipeAnnotation(id = "ex:recipe/make_wort", factoryIds = {BARREL})
 public final class MakeWort extends SimpleProcessRecipe {
     public MakeWort() {

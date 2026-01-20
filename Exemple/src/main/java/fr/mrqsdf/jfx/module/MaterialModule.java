@@ -10,10 +10,16 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * Material module class that displays a list of material info modules.
+ */
 public class MaterialModule extends VBox {
 
     private final List<InfoModule> infoModules = new ArrayList<>();
 
+    /**
+     * Constructor.
+     */
     public MaterialModule(HephaestusData data, MaterialInventory inventory) {
         setSpacing(8);
         setStyle("-fx-padding: 8; -fx-background-color: #1b1b1b;");
@@ -39,10 +45,16 @@ public class MaterialModule extends VBox {
         }
     }
 
+    /**
+     * Getters Info Modules.
+     */
     public List<InfoModule> getInfoModules() {
         return infoModules;
     }
 
+    /**
+     * Get InfoModule by material ID.
+     */
     public InfoModule getInfoModule(String materialId) {
         for (InfoModule m : infoModules) {
             if (m.getMaterialId().equals(materialId)) return m;

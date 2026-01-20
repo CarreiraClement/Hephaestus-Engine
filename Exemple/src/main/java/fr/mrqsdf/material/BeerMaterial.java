@@ -8,6 +8,9 @@ import java.util.List;
 
 import static fr.mrqsdf.resources.Data.BEER;
 
+/**
+ * Beer material class.
+ */
 @MaterialAnnotation(id = BEER)
 public final class BeerMaterial extends SimpleMaterial {
     public BeerMaterial() {

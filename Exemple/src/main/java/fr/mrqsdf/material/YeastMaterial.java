@@ -8,6 +8,9 @@ import java.util.List;
 
 import static fr.mrqsdf.resources.Data.YEAST;
 
+/**
+ * Yeast material class.
+ */
 @MaterialAnnotation(id = YEAST)
 public final class YeastMaterial extends SimpleMaterial {
     public YeastMaterial() {

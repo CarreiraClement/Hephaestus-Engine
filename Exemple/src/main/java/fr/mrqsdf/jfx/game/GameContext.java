@@ -10,24 +10,32 @@ import fr.olympus.hephaestus.resources.HephaestusData;
 
 import java.util.*;
 
-public final class GameContext {
+/**
+ * JAVAFX EXEMPLE 2D
+ * <p>
+ * Game context.
+ * @param data
+ * @param inventory
+ */
+public record GameContext(HephaestusData data, MaterialInventory inventory) {
 
-    private final HephaestusData data;
-    private final MaterialInventory inventory;
-
+    /**
+     * Constructor.
+     * @param data Hephaestus data
+     * @param inventory Material inventory
+     */
     public GameContext(HephaestusData data, MaterialInventory inventory) {
         this.data = Objects.requireNonNull(data, "data");
         this.inventory = Objects.requireNonNull(inventory, "inventory");
     }
 
-    public HephaestusData data() {
-        return data;
-    }
-
-    public MaterialInventory inventory() {
-        return inventory;
-    }
-
+    /**
+     * Try to start production in the given factory with the given recipe.
+     * Consumes required materials from inventory if successful.
+     * @param factory Factory
+     * @param recipe Process recipe
+     * @return true if production started, false otherwise
+     */
     public boolean tryStartProduction(Factory factory, ProcessRecipe recipe) {
         if (factory == null || recipe == null) return false;
 
@@ -58,6 +66,12 @@ public final class GameContext {
         return true;
     }
 
+    /**
+     * Tick the given factory, updating its state and extracting outputs to inventory.
+     * @param factory Factory
+     * @param dt Delta time in seconds
+     * @return number of output materials extracted
+     */
     public int tickFactory(Factory factory, float dt) {
         if (factory == null) return 0;
 
@@ -72,14 +86,29 @@ public final class GameContext {
         return out.size();
     }
 
+    /**
+     * Get recipe entry by ID.
+     * @param recipeId Recipe ID
+     * @return Recipe entry or null if not found
+     */
     public ProcessRecipeRegistryEntry getRecipeEntry(String recipeId) {
         return data.getProcessRecipeById(recipeId);
     }
 
+    /**
+     * Get all recipes that can be processed in the given factory.
+     * @param factory Factory
+     * @return List of recipe entries
+     */
     public List<ProcessRecipeRegistryEntry> recipesForFactory(Factory factory) {
         return data.getProcessRecipesByFactoryId(factory.getRegistryId(), factory.getRegistryGroups(), factory.getRegistryLevel());
     }
 
+    /**
+     * Grant outputs from the given recipe to inventory.
+     * @param recipe Process recipe
+     * @return number of output materials granted
+     */
     public int grantOutputsFromRecipe(ProcessRecipe recipe) {
         if (recipe == null) return 0;
 
@@ -93,12 +122,22 @@ public final class GameContext {
         return added;
     }
 
+    /**
+     * Get minimum seconds required for the given recipe.
+     * @param recipe Process recipe
+     * @return Minimum seconds, or 0 if recipe is null or has no time window
+     */
     public float minSecondsOrZero(ProcessRecipe recipe) {
         if (recipe == null) return 0f;
         TimeWindow w = recipe.timeWindowOrNull();
         return w == null ? 0f : w.minSeconds();
     }
 
+    /**
+     * Choose one material ID matching the given input matcher that is available in inventory.
+     * @param matcher Material matcher
+     * @return Material ID or null if none found
+     */
     private String chooseOneMaterialIdForInputMatcher(MaterialMatcher matcher) {
         if (matcher == null) return null;
 
@@ -113,6 +152,10 @@ public final class GameContext {
         };
     }
 
+    /** Choose one material ID matching the given output matcher from registered materials.
+     * @param matcher Material matcher
+     * @return Material ID or null if none found
+     */
     private String chooseOneMaterialIdForOutputMatcher(MaterialMatcher matcher) {
         if (matcher == null) return null;
 
@@ -124,6 +167,10 @@ public final class GameContext {
         };
     }
 
+    /**
+     * Find first available material ID.
+     * @return Material ID or null if none available
+     */
     private String firstAnyAvailable() {
         for (String id : data.getAllMaterialIds()) {
             if (inventory.getAmount(id) > 0) return id;
@@ -131,13 +178,21 @@ public final class GameContext {
         return null;
     }
 
+    /**
+     * Find first registered material ID.
+     * @return Material ID or null if none registered
+     */
     private String firstAnyRegistered() {
         for (String id : data.getAllMaterialIds()) {
-            return id; // le premier
+            return id;
         }
         return null;
     }
 
+    /** Find first available material ID matching any of the wanted categories.
+     * @param wanted Set of wanted category keys
+     * @return Material ID or null if none found
+     */
     private String firstMatchingAnyOfAvailable(Set<String> wanted) {
         if (wanted == null || wanted.isEmpty()) return null;
         for (String id : data.getAllMaterialIds()) {
@@ -150,6 +205,10 @@ public final class GameContext {
         return null;
     }
 
+    /** Find first available material ID matching all of the wanted categories.
+     * @param wanted Set of wanted category keys
+     * @return Material ID or null if none found
+     */
     private String firstMatchingAllOfAvailable(Set<String> wanted) {
         if (wanted == null || wanted.isEmpty()) return null;
         for (String id : data.getAllMaterialIds()) {
@@ -160,6 +219,10 @@ public final class GameContext {
         return null;
     }
 
+    /** Find first registered material ID matching any of the wanted categories.
+     * @param wanted Set of wanted category keys
+     * @return Material ID or null if none found
+     */
     private String firstMatchingAnyOfRegistered(Set<String> wanted) {
         if (wanted == null || wanted.isEmpty()) return null;
         for (String id : data.getAllMaterialIds()) {
@@ -171,6 +234,10 @@ public final class GameContext {
         return null;
     }
 
+    /** Find first registered material ID matching all of the wanted categories.
+     * @param wanted Set of wanted category keys
+     * @return Material ID or null if none found
+     */
     private String firstMatchingAllOfRegistered(Set<String> wanted) {
         if (wanted == null || wanted.isEmpty()) return null;
         for (String id : data.getAllMaterialIds()) {
@@ -180,6 +247,9 @@ public final class GameContext {
         return null;
     }
 
+    /** Dummy voxel data for inserted materials.
+     * @return Dummy voxel data
+     */
     private static byte[][][] dummyVoxels() {
         return new byte[1][1][1];
     }

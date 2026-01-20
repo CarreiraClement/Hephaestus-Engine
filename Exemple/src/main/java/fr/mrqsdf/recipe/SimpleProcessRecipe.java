@@ -9,7 +9,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-
+/**
+ * A simple implementation of ProcessRecipe.
+ */
 public abstract class SimpleProcessRecipe implements ProcessRecipe {
 
     private final String id;
@@ -18,16 +20,26 @@ public abstract class SimpleProcessRecipe implements ProcessRecipe {
 
     private final List<MaterialMatcher> inputs;
     private final List<MaterialMatcher> outputs;
-    private final int cost;
+    private final List<Integer>  cost;
 
     private final TimeWindow window;
 
+    /** Constructor.
+     *
+     * @param id       Recipe identifier.
+     * @param selector Recipe selector.
+     * @param ordered  Whether the inputs are ordered.
+     * @param inputs   Input material matchers.
+     * @param outputs  Output material matchers.
+     * @param cost     Recipe cost.
+     * @param window   Time window, or null for manual processes.
+     */
     protected SimpleProcessRecipe(String id,
                                   RecipeSelector selector,
                                   boolean ordered,
                                   List<MaterialMatcher> inputs,
                                   List<MaterialMatcher> outputs,
-                                  int cost,
+                                  List<Integer>  cost,
                                   TimeWindow window) {
         this.id = Objects.requireNonNull(id, "id");
         this.selector = Objects.requireNonNull(selector, "selector");
@@ -39,6 +51,11 @@ public abstract class SimpleProcessRecipe implements ProcessRecipe {
     }
 
     // ---- planning ----
+
+    /**
+     * Recipe identifier.
+     * @return Identifier.
+     */
     @Override
     public final String id() {
         return id;
@@ -65,7 +82,7 @@ public abstract class SimpleProcessRecipe implements ProcessRecipe {
     }
 
     @Override
-    public final int cost() {
+    public final List<Integer> cost() {
         return cost;
     }
 
@@ -96,6 +113,12 @@ public abstract class SimpleProcessRecipe implements ProcessRecipe {
         return window;
     }
 
+    /**
+     * Checks whether the process can start with the given context.
+     * @param ctx Process context.
+     * @param data Hephaestus data.
+     * @return True if the process can start.
+     */
     @Override
     public boolean canStart(ProcessContext ctx, HephaestusData data) {
         // Démo: si tous les inputs sont présents (unordered)
@@ -127,6 +150,7 @@ public abstract class SimpleProcessRecipe implements ProcessRecipe {
         return !window.beforeMin(elapsedSeconds);
     }
 
+    /** Helpers */
     private boolean matches(MaterialMatcher matcher, String materialId, HephaestusData data) {
         return switch (matcher.getKind()) {
             case ANY -> true;

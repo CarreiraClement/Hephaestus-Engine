@@ -8,6 +8,9 @@ import java.util.List;
 import static fr.mrqsdf.resources.Data.*;
 import static fr.mrqsdf.utils.GroupsUtils.selectorGroups;
 
+/**
+ * Recipe to make a wooden handle from an oak plank.
+ */
 @RecipeAnnotation(id = "ex:recipe/make_handle", factoryGroups = {GROUP_WORKBENCH})
 public final class MakeHandle extends SimpleProcessRecipe {
     public MakeHandle() {

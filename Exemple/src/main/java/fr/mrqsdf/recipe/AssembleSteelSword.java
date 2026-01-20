@@ -8,8 +8,14 @@ import java.util.List;
 import static fr.mrqsdf.resources.Data.*;
 import static fr.mrqsdf.utils.GroupsUtils.selectorGroupsMinLevel;
 
+/**
+ * Recipe to assemble a steel sword from a steel blade and a wooden handle.
+ */
 @RecipeAnnotation(id = "ex:recipe/assemble_steel_sword", factoryGroups = {GROUP_ANVIL}, minFactoryLevel = 2)
 public final class AssembleSteelSword extends SimpleProcessRecipe {
+    /**
+     * Constructor for AssembleSteelSword recipe.
+     */
     public AssembleSteelSword() {
         super(
                 "ex:recipe/assemble_steel_sword",

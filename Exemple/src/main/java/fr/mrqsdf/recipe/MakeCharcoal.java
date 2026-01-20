@@ -9,6 +9,9 @@ import java.util.List;
 import static fr.mrqsdf.resources.Data.*;
 import static fr.mrqsdf.utils.GroupsUtils.selectorGroups;
 
+/**
+ * Recipe to make charcoal from oak logs.
+ */
 @RecipeAnnotation(id = "ex:recipe/make_charcoal", factoryGroups = {GROUP_CHARCOAL})
 public final class MakeCharcoal extends SimpleProcessRecipe {
     public MakeCharcoal() {

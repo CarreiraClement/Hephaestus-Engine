@@ -1,5 +1,9 @@
 package fr.mrqsdf.resources;
 
+
+/**
+ * Class containing all IDs used in the example project.
+ */
 public class Data {
 
     public static final String WATER = "ex:water";

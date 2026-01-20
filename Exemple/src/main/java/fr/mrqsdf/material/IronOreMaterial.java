@@ -8,6 +8,9 @@ import java.util.List;
 
 import static fr.mrqsdf.resources.Data.IRON_ORE;
 
+/**
+ * Iron Ore material class.
+ */
 @MaterialAnnotation(id = IRON_ORE)
 public final class IronOreMaterial extends SimpleMaterial {
     public IronOreMaterial() {

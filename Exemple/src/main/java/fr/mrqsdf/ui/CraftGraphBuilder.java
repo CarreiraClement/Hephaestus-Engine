@@ -10,14 +10,31 @@ import java.util.IdentityHashMap;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * Builds a CraftGraph from a production Plan.
+ */
 public final class CraftGraphBuilder {
 
     private final AtomicInteger ids = new AtomicInteger();
 
+    /**
+     * Builds a CraftGraph from the best-only Plan.
+     *
+     * @param plan            The production plan to convert.
+     * @param availableRawIds The set of available raw material IDs.
+     * @return The constructed CraftGraph.
+     */
     public static CraftGraph fromBestOnlyPlan(Plan plan, Set<String> availableRawIds) {
         return new CraftGraphBuilder().build(plan, availableRawIds);
     }
 
+    /**
+     * Builds a CraftGraph from the given Plan.
+     *
+     * @param plan      The production plan to convert.
+     * @param available The set of available raw material IDs.
+     * @return The constructed CraftGraph.
+     */
     public CraftGraph build(Plan plan, Set<String> available) {
         if (plan == null || plan.root == null || !plan.possible) {
             return new CraftGraph();
@@ -30,6 +47,16 @@ public final class CraftGraphBuilder {
         return g;
     }
 
+    /**
+     * Recursive helper to build the CraftGraph.
+     *
+     * @param g           the CraftGraph being built
+     * @param matNodes    mapping of PlanNodes to MaterialNodes
+     * @param node        current PlanNode
+     * @param finalTarget the final target material ID
+     * @param available   set of available raw material IDs
+     * @return the corresponding MaterialNode
+     */
     private MaterialNode buildRec(CraftGraph g,
                                   IdentityHashMap<PlanNode, MaterialNode> matNodes,
                                   PlanNode node,
@@ -61,6 +88,13 @@ public final class CraftGraphBuilder {
         return mn;
     }
 
+    /**
+     * Computes the role of a MaterialNode based on its PlanNode and the final target.
+     *
+     * @param node        the PlanNode
+     * @param finalTarget the final target material ID
+     * @return the computed MaterialNode.Role
+     */
     private MaterialNode.Role computeRole(PlanNode node, String finalTarget) {
         if (node == null) return MaterialNode.Role.INTERMEDIATE;
 
@@ -75,6 +109,12 @@ public final class CraftGraphBuilder {
         return MaterialNode.Role.INTERMEDIATE;
     }
 
+    /**
+     * Generates a label for a FactoryNode based on the ProcessRecipe.
+     *
+     * @param r the ProcessRecipe
+     * @return the generated factory label
+     */
     private String factoryLabel(ProcessRecipe r) {
         String base = pickFactoryLabel(r.selector());
         TimeWindow w = r.timeWindowOrNull();
@@ -87,6 +127,12 @@ public final class CraftGraphBuilder {
         return base + tag;
     }
 
+    /**
+     * Picks a factory label based on the RecipeSelector.
+     *
+     * @param s the RecipeSelector
+     * @return the picked factory label
+     */
     private String pickFactoryLabel(RecipeSelector s) {
         if (s != null) {
             if (!s.factoryIds().isEmpty()) return "FACTORY " + s.factoryIds().iterator().next();
@@ -96,6 +142,12 @@ public final class CraftGraphBuilder {
         return "FACTORY ?";
     }
 
+    /**
+     * Trims a float to a string, removing unnecessary decimal places.
+     *
+     * @param f the float to trim
+     * @return the trimmed string representation
+     */
     private String trim(float f) {
         if (Math.abs(f - Math.round(f)) < 0.0001f) return String.valueOf(Math.round(f));
         return String.valueOf(f);

@@ -9,6 +9,9 @@ import java.util.List;
 import static fr.mrqsdf.resources.Data.*;
 import static fr.mrqsdf.utils.GroupsUtils.selectorIds;
 
+/**
+ * Recipe for fermenting beer in a barrel.
+ */
 @RecipeAnnotation(id = "ex:recipe/ferment_beer", factoryIds = {BARREL})
 public final class FermentBeer extends SimpleProcessRecipe {
     public FermentBeer() {

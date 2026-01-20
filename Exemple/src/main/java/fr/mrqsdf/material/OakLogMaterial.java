@@ -8,6 +8,9 @@ import java.util.List;
 
 import static fr.mrqsdf.resources.Data.LOG_OAK;
 
+/**
+ * Oak Log material class.
+ */
 @MaterialAnnotation(id = LOG_OAK)
 public final class OakLogMaterial extends SimpleMaterial {
     public OakLogMaterial() {

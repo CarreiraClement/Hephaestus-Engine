@@ -2,6 +2,9 @@ package fr.mrqsdf.resources;
 
 import fr.olympus.hephaestus.materials.MaterialType;
 
+/**
+ * Example material types.
+ */
 public enum ExampleType implements MaterialType {
     WATER, OAK_LOG, OAK_PLANK, WOOD_HANDLE,
     IRON_ORE, COAL, CHARCOAL,

@@ -6,26 +6,63 @@ import fr.olympus.hephaestus.resources.HephaestusData;
 
 import java.util.*;
 
+/**
+ * A simple planner that finds plans to produce target materials from available materials using given recipes.
+ */
 public final class SimplePlanner {
 
     private final List<ProcessRecipe> recipes;
     private final HephaestusData data;
 
+    /**
+     * Constructs a SimplePlanner with the specified recipes and data.
+     *
+     * @param recipes the list of process recipes
+     * @param data    the Hephaestus data
+     */
     public SimplePlanner(List<ProcessRecipe> recipes, HephaestusData data) {
         this.recipes = List.copyOf(recipes);
         this.data = data;
     }
 
+    /**
+     * Finds the best plan to produce the target material.
+     *
+     * @param targetMaterialId the ID of the target material
+     * @param available        the set of available material IDs
+     * @param maxDepth         the maximum depth for the search
+     * @param maxPlans         the maximum number of plans to consider
+     * @return the best plan, or an impossible plan if none found
+     */
     public Plan bestOnly(String targetMaterialId, Set<String> available, int maxDepth, int maxPlans) {
         List<Plan> all = solve(targetMaterialId, available, maxDepth, maxPlans);
         return all.isEmpty() ? Plan.impossible(targetMaterialId) : all.get(0);
     }
 
+    /**
+     * Finds the top K plans to produce the target material.
+     *
+     * @param targetMaterialId the ID of the target material
+     * @param available        the set of available material IDs
+     * @param k                the number of top plans to return
+     * @param maxDepth         the maximum depth for the search
+     * @param maxPlans         the maximum number of plans to consider
+     * @return a list of the top K plans
+     */
     public List<Plan> topK(String targetMaterialId, Set<String> available, int k, int maxDepth, int maxPlans) {
         List<Plan> all = solve(targetMaterialId, available, maxDepth, maxPlans);
         return all.size() <= k ? all : all.subList(0, k);
     }
 
+    /**
+     * Solves for all possible plans to produce the target material.
+     *
+     * @param targetId   the ID of the target material
+     * @param available  the set of available material IDs
+     * @param maxDepth   the maximum depth for the search
+     * @param maxPlans   the maximum number of plans to consider
+     * @return a list of possible plans
+     */
     private List<Plan> solve(String targetId, Set<String> available, int maxDepth, int maxPlans) {
         Map<String, List<Plan>> memo = new HashMap<>();
         Set<String> visiting = new HashSet<>();
@@ -41,7 +78,18 @@ public final class SimplePlanner {
         result.sort(Comparator.comparingInt(p -> p.cost));
         return result;
     }
-
+    /**
+     * Recursive helper method to solve for plans.
+     *
+     * @param target     the target material matcher
+     * @param available  the set of available material IDs
+     * @param depth      the current depth in the search
+     * @param maxDepth   the maximum depth for the search
+     * @param memo       memoization map
+     * @param visiting   set of currently visiting material keys to detect cycles
+     * @param budget     budget for limiting the number of plans
+     * @return a list of possible plans
+     */
     private List<Plan> solveRec(MaterialMatcher target,
                                             Set<String> available,
                                             int depth,
@@ -83,15 +131,16 @@ public final class SimplePlanner {
             for (List<Plan> combo : combos) {
                 if (budget.exhausted()) break;
 
-                int cost = r.cost();
+                List<Integer>  cost = r.cost();
+                int totalCost = cost.stream().mapToInt(Integer::intValue).sum();
                 List<PlanNode> children = new ArrayList<>();
                 for (Plan p : combo) {
-                    cost += p.cost;
+                    totalCost += p.cost;
                     children.add(p.root);
                 }
 
                 PlanNode root = new PlanNode(targetToId(target), r, children);
-                out.add(new Plan(targetToId(target), root, cost, true));
+                out.add(new Plan(targetToId(target), root, totalCost, true));
                 budget.consume();
             }
         }
@@ -102,10 +151,22 @@ public final class SimplePlanner {
         return out;
     }
 
+    /**
+     * Converts a MaterialMatcher to its corresponding material ID.
+     *
+     * @param m the MaterialMatcher
+     * @return the material ID
+     */
     private String targetToId(MaterialMatcher m) {
         return (m.getKind() == MaterialMatcher.Kind.ID) ? m.getMaterialId() : m.key();
     }
 
+    /**
+     * Finds all recipes that can produce the target material.
+     *
+     * @param target the target material matcher
+     * @return a list of recipes that can produce the target material
+     */
     private List<ProcessRecipe> recipesThatProduce(MaterialMatcher target) {
         List<ProcessRecipe> list = new ArrayList<>();
         for (ProcessRecipe r : recipes) {
@@ -119,11 +180,25 @@ public final class SimplePlanner {
         return list;
     }
 
+    /**
+     * Checks if the output material matcher covers the target material matcher.
+     *
+     * @param out    the output material matcher
+     * @param target the target material matcher
+     * @return true if the output covers the target, false otherwise
+     */
     private boolean covers(MaterialMatcher out, MaterialMatcher target) {
         if (out.getKind() == MaterialMatcher.Kind.ANY) return true;
         return out.key().equals(target.key());
     }
 
+    /**
+     * Computes the cross product of a list of lists of plans, respecting the budget.
+     *
+     * @param lists  the list of lists of plans
+     * @param budget the budget for limiting the number of plans
+     * @return a list of combined plans
+     */
     private List<List<Plan>> crossProduct(List<List<Plan>> lists, Budget budget) {
         if (lists.isEmpty()) return List.of(List.of());
         List<List<Plan>> acc = new ArrayList<>();
@@ -145,6 +220,9 @@ public final class SimplePlanner {
         return acc;
     }
 
+    /**
+     * A simple budget class to limit the number of plans.
+     */
     private static final class Budget {
         private int remaining;
 

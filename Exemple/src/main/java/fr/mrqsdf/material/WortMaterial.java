@@ -8,6 +8,9 @@ import java.util.List;
 
 import static fr.mrqsdf.resources.Data.WORT;
 
+/**
+ * Wort material class.
+ */
 @MaterialAnnotation(id = WORT)
 public final class WortMaterial extends SimpleMaterial {
     public WortMaterial() {

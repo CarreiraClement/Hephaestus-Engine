@@ -9,6 +9,9 @@ import java.util.List;
 import static fr.mrqsdf.resources.Data.*;
 import static fr.mrqsdf.utils.GroupsUtils.selectorGroupsMinLevel;
 
+/**
+ * Recipe to smelt iron ore into iron ingots using coal as fuel.
+ */
 @RecipeAnnotation(id = "ex:recipe/smelt_iron", factoryGroups = {GROUP_FURNACE}, minFactoryLevel = 1)
 public final class SmeltIron extends SimpleProcessRecipe {
     public SmeltIron() {

@@ -8,6 +8,9 @@ import java.util.List;
 import static fr.mrqsdf.resources.Data.*;
 import static fr.mrqsdf.utils.GroupsUtils.selectorGroupsMinLevel;
 
+/**
+ * Recipe for forging a steel blade at an anvil.
+ */
 @RecipeAnnotation(id = "ex:recipe/forge_steel_blade", factoryGroups = {GROUP_ANVIL}, minFactoryLevel = 2)
 public final class ForgeSteelBlade extends SimpleProcessRecipe {
     public ForgeSteelBlade() {

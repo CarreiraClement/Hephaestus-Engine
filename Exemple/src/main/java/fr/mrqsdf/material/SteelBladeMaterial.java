@@ -8,6 +8,9 @@ import java.util.List;
 
 import static fr.mrqsdf.resources.Data.STEEL_BLADE;
 
+/**
+ * Steel Blade material class.
+ */
 @MaterialAnnotation(id = STEEL_BLADE)
 public final class SteelBladeMaterial extends SimpleMaterial {
     public SteelBladeMaterial() {
