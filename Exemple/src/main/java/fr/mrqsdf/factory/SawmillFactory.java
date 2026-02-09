@@ -2,6 +2,9 @@ package fr.mrqsdf.factory;
 
 import fr.olympus.hephaestus.factory.Factory;
 import fr.olympus.hephaestus.factory.FactoryAnnotation;
+import fr.olympus.hephaestus.processing.MaterialMatcher;
+
+import java.util.List;
 
 import static fr.mrqsdf.resources.Data.GROUP_SAWMILL;
 import static fr.mrqsdf.resources.Data.SAWMILL;
@@ -13,7 +16,7 @@ import static fr.mrqsdf.resources.Data.SAWMILL;
 public final class SawmillFactory extends Factory {
 
     @Override
-    public void processFinished() {
+    public void processFinished(List<MaterialMatcher> outputs) {
 
     }
 }

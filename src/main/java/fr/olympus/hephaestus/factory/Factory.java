@@ -160,7 +160,9 @@ public abstract class Factory {
         session.recipe.onEvent(ctx, data, event, session.elapsed, phase);
 
         if (session.recipe.tryComplete(ctx, data, session.elapsed, phase)) {
+            List<MaterialMatcher> outputs = List.copyOf(session.recipe.outputs());
             session = null;
+            processFinished(outputs);
         }
     }
 
@@ -192,8 +194,9 @@ public abstract class Factory {
         }
 
         if (session.recipe.tryComplete(ctx, data, session.elapsed, phase)) {
+            List<MaterialMatcher> outputs = List.copyOf(session.recipe.outputs());
             session = null;
-            processFinished();
+            processFinished(outputs);
         }
     }
 
@@ -258,7 +261,7 @@ public abstract class Factory {
      * Called when a processing session is finished.
      * This method can be overridden by subclasses to perform actions upon completion.
      */
-    public abstract void processFinished();
+    public abstract void processFinished(List<MaterialMatcher> outputs);
 
 
     /**
