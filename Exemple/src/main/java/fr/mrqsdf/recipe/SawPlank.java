@@ -16,10 +16,7 @@ import static fr.mrqsdf.utils.GroupsUtils.selectorGroups;
 @RecipeAnnotation(id = "ex:recipe/saw_plank", factoryGroups = {GROUP_SAWMILL})
 public final class SawPlank extends DefaultProcessRecipe {
     public SawPlank() {
-        super(
-                "ex:recipe/saw_plank",
-                selectorGroups(GROUP_SAWMILL),
-                false,
+        super(false,
                 List.of(MaterialMatcher.id(LOG_OAK)),
                 List.of(MaterialMatcher.id(PLANK_OAK)),
                 new TimeWindow(2f, 4f)

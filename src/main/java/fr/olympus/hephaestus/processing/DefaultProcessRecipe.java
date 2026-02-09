@@ -14,32 +14,29 @@ import java.util.Set;
  */
 public abstract class DefaultProcessRecipe implements ProcessRecipe {
 
-    protected final String id;
-    protected final RecipeSelector selector;
+    protected String id;
+    protected RecipeSelector selector;
     protected final boolean ordered;
 
     protected final List<MaterialMatcher> inputs;
     protected final List<MaterialMatcher> outputs;
-    protected final List<Integer>  cost;
+    protected final List<Integer> cost;
 
     protected final TimeWindow window;
 
 
-    /** Constructor.
+    /**
+     * Constructor.
      *
-     * @param id       Recipe identifier.
-     * @param selector Recipe selector.
-     * @param ordered  Whether the inputs are ordered.
-     * @param inputs   Input material matchers.
-     * @param outputs  Output material matchers.
-     * @param window   Time window, or null for manual processes.
+     * @param ordered Whether the inputs are ordered.
+     * @param inputs  Input material matchers.
+     * @param outputs Output material matchers.
+     * @param window  Time window, or null for manual processes.
      */
-    protected DefaultProcessRecipe(String id,
-                                  RecipeSelector selector,
-                                  boolean ordered,
-                                  List<MaterialMatcher> inputs,
-                                  List<MaterialMatcher> outputs,
-                                  TimeWindow window) {
+    protected DefaultProcessRecipe(boolean ordered,
+                                   List<MaterialMatcher> inputs,
+                                   List<MaterialMatcher> outputs,
+                                   TimeWindow window) {
         this.id = Objects.requireNonNull(id, "id");
         this.selector = Objects.requireNonNull(selector, "selector");
         this.ordered = ordered;
@@ -52,6 +49,7 @@ public abstract class DefaultProcessRecipe implements ProcessRecipe {
 
     /**
      * Recipe identifier.
+     *
      * @return Identifier.
      */
     @Override
@@ -101,6 +99,7 @@ public abstract class DefaultProcessRecipe implements ProcessRecipe {
     public int inputCount() {
         return inputs.size();
     }
+
     @Override
     public int outputCount() {
         return outputs.size();
@@ -141,11 +140,18 @@ public abstract class DefaultProcessRecipe implements ProcessRecipe {
         return !window.beforeMin(elapsedSeconds);
     }
 
+    @Override
+    public final void registerMeta(String registerId, RecipeSelector selector) {
+        this.id = registerId;
+        this.selector = selector;
+    }
+
     /**
      * Checks if the given material ID matches the given matcher.
-     * @param matcher Material matcher.
+     *
+     * @param matcher    Material matcher.
      * @param materialId Material ID to check.
-     * @param data Hephaestus data for category lookups.
+     * @param data       Hephaestus data for category lookups.
      * @return True if the material ID matches the matcher, false otherwise.
      */
     private boolean matches(MaterialMatcher matcher, String materialId, HephaestusData data) {

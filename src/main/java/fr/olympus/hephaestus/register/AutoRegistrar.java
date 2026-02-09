@@ -103,6 +103,9 @@ public final class AutoRegistrar {
                             ann.minFactoryLevel()
                     );
 
+                    ProcessRecipe recipe = newInstance(clazz);
+                    recipe.registerMeta(ann.id(), selector);
+
                     ProcessRecipeRegistryEntry entry = new ProcessRecipeRegistryEntry(
                             ann.id(),
                             selector,

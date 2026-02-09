@@ -142,4 +142,12 @@ public interface ProcessRecipe {
      */
     default void onOverProcessed(ProcessContext ctx, fr.olympus.hephaestus.resources.HephaestusData data, float elapsedSeconds) {
     }
+
+    /**
+     * Register this recipe in the registry.
+     *
+     * @param registerId Unique identifier for registration (usually same as id())
+     * @param selector   Recipe selector to use for this recipe
+     */
+    void registerMeta(String registerId, RecipeSelector selector);
 }

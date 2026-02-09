@@ -15,10 +15,7 @@ import static fr.mrqsdf.utils.GroupsUtils.selectorGroups;
 @RecipeAnnotation(id = "ex:recipe/make_handle", factoryGroups = {GROUP_WORKBENCH})
 public final class MakeHandle extends DefaultProcessRecipe {
     public MakeHandle() {
-        super(
-                "ex:recipe/make_handle",
-                selectorGroups(GROUP_WORKBENCH),
-                false,
+        super(false,
                 List.of(MaterialMatcher.id(PLANK_OAK)),
                 List.of(MaterialMatcher.id(HANDLE_WOOD)),
                 null

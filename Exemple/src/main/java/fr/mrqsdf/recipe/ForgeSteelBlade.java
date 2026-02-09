@@ -15,10 +15,7 @@ import static fr.mrqsdf.utils.GroupsUtils.selectorGroupsMinLevel;
 @RecipeAnnotation(id = "ex:recipe/forge_steel_blade", factoryGroups = {GROUP_ANVIL}, minFactoryLevel = 2)
 public final class ForgeSteelBlade extends DefaultProcessRecipe {
     public ForgeSteelBlade() {
-        super(
-                "ex:recipe/forge_steel_blade",
-                selectorGroupsMinLevel(GROUP_ANVIL, 2),
-                true,
+        super(true,
                 List.of(MaterialMatcher.id(STEEL_INGOT)),
                 List.of(MaterialMatcher.id(STEEL_BLADE)),
                 null

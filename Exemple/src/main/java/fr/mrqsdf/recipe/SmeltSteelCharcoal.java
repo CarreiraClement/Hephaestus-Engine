@@ -16,10 +16,7 @@ import static fr.mrqsdf.utils.GroupsUtils.selectorIds;
 @RecipeAnnotation(id = "ex:recipe/smelt_steel_charcoal", factoryIds = {FURNACE_BLAST})
 public final class SmeltSteelCharcoal extends DefaultProcessRecipe {
     public SmeltSteelCharcoal() {
-        super(
-                "ex:recipe/smelt_steel_charcoal",
-                selectorIds(FURNACE_BLAST),
-                false,
+        super(false,
                 List.of(MaterialMatcher.id(IRON_INGOT), MaterialMatcher.id(CHARCOAL)),
                 List.of(MaterialMatcher.id(STEEL_INGOT)),
                 new TimeWindow(10f, 20f)

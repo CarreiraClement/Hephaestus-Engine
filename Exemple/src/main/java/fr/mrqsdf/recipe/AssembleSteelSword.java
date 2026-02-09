@@ -18,10 +18,7 @@ public final class AssembleSteelSword extends DefaultProcessRecipe {
      * Constructor for AssembleSteelSword recipe.
      */
     public AssembleSteelSword() {
-        super(
-                "ex:recipe/assemble_steel_sword",
-                selectorGroupsMinLevel(GROUP_ANVIL, 2),
-                false,
+        super(false,
                 List.of(MaterialMatcher.id(STEEL_BLADE), MaterialMatcher.id(HANDLE_WOOD)),
                 List.of(MaterialMatcher.id(STEEL_SWORD)),
                 null

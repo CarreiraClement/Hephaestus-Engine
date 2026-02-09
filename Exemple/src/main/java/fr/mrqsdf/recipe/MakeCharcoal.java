@@ -16,10 +16,7 @@ import static fr.mrqsdf.utils.GroupsUtils.selectorGroups;
 @RecipeAnnotation(id = "ex:recipe/make_charcoal", factoryGroups = {GROUP_CHARCOAL})
 public final class MakeCharcoal extends DefaultProcessRecipe {
     public MakeCharcoal() {
-        super(
-                "ex:recipe/make_charcoal",
-                selectorGroups(GROUP_CHARCOAL),
-                false,
+        super(false,
                 List.of(MaterialMatcher.id(LOG_OAK)),
                 List.of(MaterialMatcher.id(CHARCOAL)),
                 new TimeWindow(5f, 10f)

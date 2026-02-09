@@ -16,10 +16,7 @@ import static fr.mrqsdf.utils.GroupsUtils.selectorIds;
 @RecipeAnnotation(id = "ex:recipe/make_wort", factoryIds = {BARREL})
 public final class MakeWort extends DefaultProcessRecipe {
     public MakeWort() {
-        super(
-                "ex:recipe/make_wort",
-                selectorIds(BARREL),
-                false,
+        super(false,
                 List.of(MaterialMatcher.id(WATER), MaterialMatcher.id(BARLEY)),
                 List.of(MaterialMatcher.id(WORT)),
                 new TimeWindow(4f, 8f)

@@ -16,10 +16,7 @@ import static fr.mrqsdf.utils.GroupsUtils.selectorIds;
 @RecipeAnnotation(id = "ex:recipe/ferment_beer", factoryIds = {BARREL})
 public final class FermentBeer extends DefaultProcessRecipe {
     public FermentBeer() {
-        super(
-                "ex:recipe/ferment_beer",
-                selectorIds(BARREL),
-                false,
+        super(false,
                 List.of(MaterialMatcher.id(WORT), MaterialMatcher.id(YEAST)),
                 List.of(MaterialMatcher.id(BEER)),
                 new TimeWindow(6f, 12f)
