@@ -2,6 +2,9 @@ package fr.mrqsdf.factory;
 
 import fr.olympus.hephaestus.factory.Factory;
 import fr.olympus.hephaestus.factory.FactoryAnnotation;
+import fr.olympus.hephaestus.processing.MaterialMatcher;
+
+import java.util.List;
 
 import static fr.mrqsdf.resources.Data.ANVIL_IRON;
 import static fr.mrqsdf.resources.Data.GROUP_ANVIL;
@@ -11,4 +14,9 @@ import static fr.mrqsdf.resources.Data.GROUP_ANVIL;
  */
 @FactoryAnnotation(id = ANVIL_IRON, groups = {GROUP_ANVIL}, level = 2)
 public final class IronAnvilFactory extends Factory {
+
+    @Override
+    public void processFinished(List<MaterialMatcher> outputs) {
+
+    }
 }

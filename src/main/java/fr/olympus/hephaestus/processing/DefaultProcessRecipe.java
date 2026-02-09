@@ -1,7 +1,6 @@
-package fr.mrqsdf.recipe;
+package fr.olympus.hephaestus.processing;
 
 import fr.olympus.hephaestus.materials.MaterialInstance;
-import fr.olympus.hephaestus.processing.*;
 import fr.olympus.hephaestus.register.RecipeSelector;
 import fr.olympus.hephaestus.resources.HephaestusData;
 
@@ -9,51 +8,46 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+
 /**
- * A simple implementation of ProcessRecipe.
+ * A default implementation of ProcessRecipe with common logic.
  */
-public abstract class SimpleProcessRecipe implements ProcessRecipe {
+public abstract class DefaultProcessRecipe implements ProcessRecipe {
 
-    private final String id;
-    private final RecipeSelector selector;
-    private final boolean ordered;
+    protected String id;
+    protected RecipeSelector selector;
+    protected final boolean ordered;
 
-    private final List<MaterialMatcher> inputs;
-    private final List<MaterialMatcher> outputs;
-    private final List<Integer>  cost;
+    protected final List<MaterialMatcher> inputs;
+    protected final List<MaterialMatcher> outputs;
+    protected final List<Integer> cost;
 
-    private final TimeWindow window;
+    protected final TimeWindow window;
 
-    /** Constructor.
+
+    /**
+     * Constructor.
      *
-     * @param id       Recipe identifier.
-     * @param selector Recipe selector.
-     * @param ordered  Whether the inputs are ordered.
-     * @param inputs   Input material matchers.
-     * @param outputs  Output material matchers.
-     * @param cost     Recipe cost.
-     * @param window   Time window, or null for manual processes.
+     * @param ordered Whether the inputs are ordered.
+     * @param inputs  Input material matchers.
+     * @param outputs Output material matchers.
+     * @param window  Time window, or null for manual processes.
      */
-    protected SimpleProcessRecipe(String id,
-                                  RecipeSelector selector,
-                                  boolean ordered,
-                                  List<MaterialMatcher> inputs,
-                                  List<MaterialMatcher> outputs,
-                                  List<Integer>  cost,
-                                  TimeWindow window) {
-        this.id = Objects.requireNonNull(id, "id");
-        this.selector = Objects.requireNonNull(selector, "selector");
+    protected DefaultProcessRecipe(boolean ordered,
+                                   List<MaterialMatcher> inputs,
+                                   List<MaterialMatcher> outputs,
+                                   TimeWindow window) {
         this.ordered = ordered;
         this.inputs = List.copyOf(inputs);
         this.outputs = List.copyOf(outputs);
-        this.cost = cost;
+        this.cost = this.inputs.stream().map(MaterialMatcher::getQuantity).toList(); // simple: cost = number of inputs
         this.window = window;
     }
 
-    // ---- planning ----
 
     /**
      * Recipe identifier.
+     *
      * @return Identifier.
      */
     @Override
@@ -103,6 +97,7 @@ public abstract class SimpleProcessRecipe implements ProcessRecipe {
     public int inputCount() {
         return inputs.size();
     }
+
     @Override
     public int outputCount() {
         return outputs.size();
@@ -113,12 +108,6 @@ public abstract class SimpleProcessRecipe implements ProcessRecipe {
         return window;
     }
 
-    /**
-     * Checks whether the process can start with the given context.
-     * @param ctx Process context.
-     * @param data Hephaestus data.
-     * @return True if the process can start.
-     */
     @Override
     public boolean canStart(ProcessContext ctx, HephaestusData data) {
         // Démo: si tous les inputs sont présents (unordered)
@@ -143,14 +132,26 @@ public abstract class SimpleProcessRecipe implements ProcessRecipe {
     @Override
     public boolean tryComplete(ProcessContext ctx, HephaestusData data, float elapsedSeconds, ProcessingPhase phase) {
         if (window == null) {
-            // manuel: dans un vrai jeu tu le ferais via progress/events
+
             return true;
         }
-        // auto: terminé dès que min atteint
         return !window.beforeMin(elapsedSeconds);
     }
 
-    /** Helpers */
+    @Override
+    public final void registerMeta(String registerId, RecipeSelector selector) {
+        this.id = Objects.requireNonNull(registerId, "Recipe ID cannot be null");
+        this.selector = Objects.requireNonNull(selector, "RecipeSelector cannot be null");
+    }
+
+    /**
+     * Checks if the given material ID matches the given matcher.
+     *
+     * @param matcher    Material matcher.
+     * @param materialId Material ID to check.
+     * @param data       Hephaestus data for category lookups.
+     * @return True if the material ID matches the matcher, false otherwise.
+     */
     private boolean matches(MaterialMatcher matcher, String materialId, HephaestusData data) {
         return switch (matcher.getKind()) {
             case ANY -> true;

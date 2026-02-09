@@ -16,6 +16,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+import java.lang.reflect.Type;
+import java.util.Scanner;
+
 import static fr.mrqsdf.resources.Data.*;
 
 public class JavaFXExemple extends Application {
@@ -55,9 +58,11 @@ public class JavaFXExemple extends Application {
         leftScroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         leftScroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
 
+
         // CENTER
         CenterModule center = new CenterModule(game);
         center.setStyle("-fx-background-color: #121212;");
+
 
         // BOTTOM
         Label bottomTitle = new Label("Usines (sélection = mode placement)");

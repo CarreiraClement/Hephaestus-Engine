@@ -111,6 +111,9 @@ public final class HephaestusData {
         return instance;
     }
 
+
+
+
     /**
      * Retrieves the material definition for the given material ID.
      *
@@ -138,6 +141,16 @@ public final class HephaestusData {
             if (c instanceof Enum<?> e) keys.add(e.name());
         }
         return keys;
+    }
+
+    public List<String> getMaterialWithCategory(MaterialCategory... categories) {
+        List<String> results = new ArrayList<>();
+        for (Map.Entry<String, Material> e : materials.entrySet()) {
+            if (e.getValue().hasCategories(categories)) {
+                results.add(e.getKey());
+            }
+        }
+        return results;
     }
 
     /**
