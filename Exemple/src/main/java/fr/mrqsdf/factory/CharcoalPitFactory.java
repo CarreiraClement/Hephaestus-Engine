@@ -11,4 +11,9 @@ import static fr.mrqsdf.resources.Data.GROUP_CHARCOAL;
  */
 @FactoryAnnotation(id = CHARCOAL_PIT, groups = {GROUP_CHARCOAL}, level = 0)
 public final class CharcoalPitFactory extends Factory {
+
+    @Override
+    public void processFinished() {
+
+    }
 }

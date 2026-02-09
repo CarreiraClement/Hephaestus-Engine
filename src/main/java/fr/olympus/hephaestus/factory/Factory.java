@@ -193,6 +193,7 @@ public abstract class Factory {
 
         if (session.recipe.tryComplete(ctx, data, session.elapsed, phase)) {
             session = null;
+            processFinished();
         }
     }
 
@@ -252,6 +253,13 @@ public abstract class Factory {
     public final boolean getSession() {
         return this.session != null;
     }
+
+    /**
+     * Called when a processing session is finished.
+     * This method can be overridden by subclasses to perform actions upon completion.
+     */
+    public abstract void processFinished();
+
 
     /**
      * Represents a processing session within the factory.

@@ -11,4 +11,9 @@ import static fr.mrqsdf.resources.Data.WORKBENCH;
  */
 @FactoryAnnotation(id = WORKBENCH, groups = {GROUP_WORKBENCH}, level = 0)
 public final class WorkbenchFactory extends Factory {
+
+    @Override
+    public void processFinished() {
+
+    }
 }

@@ -11,4 +11,9 @@ import static fr.mrqsdf.resources.Data.GROUP_ANVIL;
  */
 @FactoryAnnotation(id = ANVIL_IRON, groups = {GROUP_ANVIL}, level = 2)
 public final class IronAnvilFactory extends Factory {
+
+    @Override
+    public void processFinished() {
+
+    }
 }

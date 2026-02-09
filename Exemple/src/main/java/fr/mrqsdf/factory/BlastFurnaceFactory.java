@@ -11,4 +11,9 @@ import static fr.mrqsdf.resources.Data.GROUP_FURNACE;
  */
 @FactoryAnnotation(id = FURNACE_BLAST, groups = {GROUP_FURNACE}, level = 2)
 public final class BlastFurnaceFactory extends Factory {
+
+    @Override
+    public void processFinished() {
+
+    }
 }

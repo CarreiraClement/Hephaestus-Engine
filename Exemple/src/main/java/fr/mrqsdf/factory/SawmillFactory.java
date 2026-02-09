@@ -11,4 +11,9 @@ import static fr.mrqsdf.resources.Data.SAWMILL;
  */
 @FactoryAnnotation(id = SAWMILL, groups = {GROUP_SAWMILL}, level = 0)
 public final class SawmillFactory extends Factory {
+
+    @Override
+    public void processFinished() {
+
+    }
 }
