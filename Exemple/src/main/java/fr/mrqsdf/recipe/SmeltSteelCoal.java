@@ -21,7 +21,6 @@ public final class SmeltSteelCoal extends SimpleProcessRecipe {
                 false,
                 List.of(MaterialMatcher.id(IRON_INGOT), MaterialMatcher.id(COAL)),
                 List.of(MaterialMatcher.id(STEEL_INGOT)),
-                5,
                 new TimeWindow(10f, 20f)
         );
     }

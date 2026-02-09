@@ -21,7 +21,6 @@ public final class SmeltIron extends SimpleProcessRecipe {
                 false,
                 List.of(MaterialMatcher.id(IRON_ORE), MaterialMatcher.id(COAL)),
                 List.of(MaterialMatcher.id(IRON_INGOT)),
-                3,
                 new TimeWindow(8f, 15f)
         );
     }

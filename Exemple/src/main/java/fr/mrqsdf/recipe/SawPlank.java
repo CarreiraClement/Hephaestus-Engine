@@ -21,7 +21,6 @@ public final class SawPlank extends SimpleProcessRecipe {
                 false,
                 List.of(MaterialMatcher.id(LOG_OAK)),
                 List.of(MaterialMatcher.id(PLANK_OAK)),
-                1,
                 new TimeWindow(2f, 4f)
         );
     }

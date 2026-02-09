@@ -20,7 +20,6 @@ public final class ForgeSteelBlade extends SimpleProcessRecipe {
                 true,
                 List.of(MaterialMatcher.id(STEEL_INGOT)),
                 List.of(MaterialMatcher.id(STEEL_BLADE)),
-                2,
                 null
         );
     }

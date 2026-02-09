@@ -20,7 +20,6 @@ public final class MakeHandle extends SimpleProcessRecipe {
                 false,
                 List.of(MaterialMatcher.id(PLANK_OAK)),
                 List.of(MaterialMatcher.id(HANDLE_WOOD)),
-                1,
                 null
         );
     }

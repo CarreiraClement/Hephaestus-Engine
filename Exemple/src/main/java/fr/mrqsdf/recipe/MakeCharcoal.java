@@ -21,7 +21,6 @@ public final class MakeCharcoal extends SimpleProcessRecipe {
                 false,
                 List.of(MaterialMatcher.id(LOG_OAK)),
                 List.of(MaterialMatcher.id(CHARCOAL)),
-                2,
                 new TimeWindow(5f, 10f)
         );
     }

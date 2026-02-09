@@ -31,7 +31,6 @@ public abstract class SimpleProcessRecipe implements ProcessRecipe {
      * @param ordered  Whether the inputs are ordered.
      * @param inputs   Input material matchers.
      * @param outputs  Output material matchers.
-     * @param cost     Recipe cost.
      * @param window   Time window, or null for manual processes.
      */
     protected SimpleProcessRecipe(String id,
@@ -39,14 +38,13 @@ public abstract class SimpleProcessRecipe implements ProcessRecipe {
                                   boolean ordered,
                                   List<MaterialMatcher> inputs,
                                   List<MaterialMatcher> outputs,
-                                  List<Integer>  cost,
                                   TimeWindow window) {
         this.id = Objects.requireNonNull(id, "id");
         this.selector = Objects.requireNonNull(selector, "selector");
         this.ordered = ordered;
         this.inputs = List.copyOf(inputs);
         this.outputs = List.copyOf(outputs);
-        this.cost = cost;
+        this.cost = this.inputs.stream().map(MaterialMatcher::getQuantity).toList(); // simple: cost = number of inputs
         this.window = window;
     }
 
@@ -143,10 +141,9 @@ public abstract class SimpleProcessRecipe implements ProcessRecipe {
     @Override
     public boolean tryComplete(ProcessContext ctx, HephaestusData data, float elapsedSeconds, ProcessingPhase phase) {
         if (window == null) {
-            // manuel: dans un vrai jeu tu le ferais via progress/events
+
             return true;
         }
-        // auto: terminé dès que min atteint
         return !window.beforeMin(elapsedSeconds);
     }
 

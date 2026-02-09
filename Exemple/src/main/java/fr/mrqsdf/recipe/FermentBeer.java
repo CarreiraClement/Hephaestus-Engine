@@ -21,7 +21,6 @@ public final class FermentBeer extends SimpleProcessRecipe {
                 false,
                 List.of(MaterialMatcher.id(WORT), MaterialMatcher.id(YEAST)),
                 List.of(MaterialMatcher.id(BEER)),
-                4,
                 new TimeWindow(6f, 12f)
         );
     }

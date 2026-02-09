@@ -21,7 +21,6 @@ public final class MakeWort extends SimpleProcessRecipe {
                 false,
                 List.of(MaterialMatcher.id(WATER), MaterialMatcher.id(BARLEY)),
                 List.of(MaterialMatcher.id(WORT)),
-                2,
                 new TimeWindow(4f, 8f)
         );
     }

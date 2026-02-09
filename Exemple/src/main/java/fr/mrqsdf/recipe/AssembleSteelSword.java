@@ -23,7 +23,6 @@ public final class AssembleSteelSword extends SimpleProcessRecipe {
                 false,
                 List.of(MaterialMatcher.id(STEEL_BLADE), MaterialMatcher.id(HANDLE_WOOD)),
                 List.of(MaterialMatcher.id(STEEL_SWORD)),
-                2,
                 null
         );
     }
