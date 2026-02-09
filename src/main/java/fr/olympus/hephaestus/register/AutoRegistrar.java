@@ -109,7 +109,7 @@ public final class AutoRegistrar {
                     ProcessRecipeRegistryEntry entry = new ProcessRecipeRegistryEntry(
                             ann.id(),
                             selector,
-                            newInstance(clazz)
+                            recipe
                     );
 
                     data.registerProcessRecipe(entry);

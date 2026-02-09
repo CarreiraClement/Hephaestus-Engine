@@ -37,8 +37,6 @@ public abstract class DefaultProcessRecipe implements ProcessRecipe {
                                    List<MaterialMatcher> inputs,
                                    List<MaterialMatcher> outputs,
                                    TimeWindow window) {
-        this.id = Objects.requireNonNull(id, "id");
-        this.selector = Objects.requireNonNull(selector, "selector");
         this.ordered = ordered;
         this.inputs = List.copyOf(inputs);
         this.outputs = List.copyOf(outputs);
@@ -142,8 +140,8 @@ public abstract class DefaultProcessRecipe implements ProcessRecipe {
 
     @Override
     public final void registerMeta(String registerId, RecipeSelector selector) {
-        this.id = registerId;
-        this.selector = selector;
+        this.id = Objects.requireNonNull(registerId, "Recipe ID cannot be null");
+        this.selector = Objects.requireNonNull(selector, "RecipeSelector cannot be null");
     }
 
     /**
