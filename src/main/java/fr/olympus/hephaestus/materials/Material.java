@@ -1,5 +1,6 @@
 package fr.olympus.hephaestus.materials;
 
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -73,6 +74,10 @@ public abstract class Material {
      */
     public String getName() {
         return name;
+    }
+
+    public boolean hasCategories(MaterialCategory... categories) {
+        return new HashSet<>(this.categories).containsAll(List.of(categories));
     }
 
 }
